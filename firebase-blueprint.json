@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A task created by a user",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The description of the task"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether the task is finished"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The UID of the user who owns this task"
+        },
+        "scheduledTime": {
+          "type": "string",
+          "description": "The time the task is scheduled for (e.g. 08:00)"
+        },
+        "dueDate": {
+          "type": "string",
+          "description": "The date the task is due (e.g. 2024-12-31)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the task was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the task was last updated"
+        }
+      },
+      "required": ["title", "completed", "userId", "createdAt", "updatedAt"]
+    },
+    "User": {
+      "title": "User Profile",
+      "description": "Public profile information for a user",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "photoURL": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Collection of user tasks"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data"
+    }
+  }
+}

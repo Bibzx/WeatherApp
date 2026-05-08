@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "442708222223",
+    "project_id": "appweather-a3780",
+    "storage_bucket": "appweather-a3780.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442708222223:android:34f63e06e402acd6ef5e7a",
+        "android_client_info": {
+          "package_name": "com.weathertask.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442708222223-7op4drvs4ujv895pv270pikr40pg8nh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weathertask.pro",
+            "certificate_hash": "201ed09c88dc7653d58a98fe454d7b4ea28521e8"
+          }
+        },
+        {
+          "client_id": "442708222223-c1h8caslo192v3b60thv33pv803jf6lb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClrUANxUE8BVm7LaM8NDw0PKRgQHLss0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442708222223-c1h8caslo192v3b60thv33pv803jf6lb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

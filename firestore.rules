@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Validation Helpers
+    function isValidTask(data) {
+      return data.keys().hasAll(['title', 'completed', 'userId', 'createdAt', 'updatedAt']) &&
+             data.title is string && 
+             data.completed is bool &&
+             data.userId is string && data.userId == request.auth.uid &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAny(['displayName', 'photoURL', 'email']) &&
+             (!data.has('displayName') || (data.displayName is string && data.displayName.size() <= 100)) &&
+             (!data.has('photoURL') || (data.photoURL is string && data.photoURL.size() <= 1500)) &&
+             (!data.has('email') || (data.email is string && data.email.size() <= 200));
+    }
+
+    // 1. Tasks Collection
+    match /tasks/{taskId} {
+      allow get: if isSignedIn() && isOwner(existing().userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && 
+                      isValidTask(incoming());
+                      
+      allow update: if isSignedIn() && 
+                      isOwner(existing().userId) &&
+                      isValidTask(incoming()) &&
+                      incoming().userId == existing().userId &&
+                      incoming().createdAt == existing().createdAt && (
+                        // Action: Toggle completion
+                        (incoming().diff(existing()).affectedKeys().hasOnly(['completed', 'updatedAt'])) ||
+                        // Action: Edit body
+                        (incoming().diff(existing()).affectedKeys().hasOnly(['title', 'updatedAt', 'scheduledTime']))
+                      );
+                      
+      allow delete: if isSignedIn() && isOwner(existing().userId);
+    }
+
+    // 2. Users Collection
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false;
+      
+      allow create, update: if isSignedIn() && 
+                               isOwner(userId) && 
+                               isValidUser(incoming());
+      
+      allow delete: if false;
+    }
+  }
+}

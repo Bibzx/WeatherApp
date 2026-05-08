@@ -1,0 +1,6 @@
+{
+  "name": "WeatherTask Pro",
+  "description": "A modern mobile-first app featuring Firebase Authentication, Firestore CRUD for task management, and realtime weather updates using public APIs.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}
