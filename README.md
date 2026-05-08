@@ -2,7 +2,7 @@
 
 Aplikasi manajemen tugas modern yang terintegrasi dengan data cuaca real-time, dirancang dengan antarmuka yang memukau dan dioptimalkan untuk performa tinggi di perangkat seluler.
 
-![Banner](https://ibb.co.com/gZ4V3ZHD)
+![Banner](https://i.top4top.io/p_3780opikh0.jpg)
 
 ## ✨ Fitur Utama
 
